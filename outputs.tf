@@ -1,10 +1,10 @@
 output "keyring" {
-  value       = join("", google_kms_key_ring.key_ring[*].id)
+  value       = join("", google_kms_key_ring.keyring[*].id)
   description = "Self link of the keyring."
 }
 
 output "keyring_name" {
-  value       = join("", google_kms_key_ring.key_ring[*].name)
+  value       = join("", google_kms_key_ring.keyring[*].name)
   description = "Name of the keyring."
 }
 

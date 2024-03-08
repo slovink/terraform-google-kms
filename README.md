@@ -1,3 +1,33 @@
+<p align="center"> <img src="https://user-images.githubusercontent.com/50652676/62349836-882fef80-b51e-11e9-99e3-7b974309c7e3.png" width="100" height="100"></p>
+
+
+<h1 align="center">
+    Terraform google kms
+</h1>
+
+<p align="center" style="font-size: 1.2rem;">
+    Terraform module to create kms resource on google.
+     </p>
+
+<p align="center">
+
+<a href="https://www.terraform.io">
+  <img src="https://img.shields.io/badge/Terraform-v1.7.4-green" alt="Terraform">
+</a>
+<a href="https://github.com/slovink/terraform-google-kms/blob/main/LICENSE">
+  <img src="https://img.shields.io/badge/License-APACHE-blue.svg" alt="Licence">
+</a>
+
+</p>
+<p align="center">
+
+<a href='https://www.facebook.com/Slovink.in=https://github.com/slovink/terraform-lables'>
+  <img title="Share on Facebook" src="https://user-images.githubusercontent.com/50652676/62817743-4f64cb80-bb59-11e9-90c7-b057252ded50.png" />
+</a>
+<a href='https://www.linkedin.com/company/101534993/admin/feed/posts/=https://github.com/slovink/terraform-lables'>
+  <img title="Share on LinkedIn" src="https://user-images.githubusercontent.com/50652676/62817742-4e339e80-bb59-11e9-87b9-a1f68cae1049.png" />
+</a>
+
 # Terraform-google-kms
 # Terraform Google Cloud Kms Module
 ## Table of Contents
@@ -41,20 +71,20 @@ This project is licensed under the **MIT** License - see the [LICENSE](https://g
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.6 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | >= 3.50, < 5.11.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.7.4 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | >= 3.50, < 5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | >= 3.50, < 5.11.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | >= 3.50, < 5.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_labels"></a> [labels](#module\_labels) | git::https://github.com/slovink/terraform-google-labels.git | v1.0.1 |
+| <a name="module_labels"></a> [labels](#module\_labels) | git::https://github.com/slovink/terraform-google-labels.git | v1.0.0 |
 
 ## Resources
 
@@ -63,7 +93,7 @@ This project is licensed under the **MIT** License - see the [LICENSE](https://g
 | [google_kms_crypto_key.key](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/kms_crypto_key) | resource |
 | [google_kms_crypto_key.key_ephemeral](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/kms_crypto_key) | resource |
 | [google_kms_crypto_key_iam_binding.owners](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/kms_crypto_key_iam_binding) | resource |
-| [google_kms_key_ring.key_ring](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/kms_key_ring) | resource |
+| [google_kms_key_ring.keyring](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/kms_key_ring) | resource |
 | [google_client_config.current](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/client_config) | data source |
 
 ## Inputs
@@ -75,9 +105,9 @@ This project is licensed under the **MIT** License - see the [LICENSE](https://g
 | <a name="input_key_algorithm"></a> [key\_algorithm](#input\_key\_algorithm) | The algorithm to use when creating a version based on this template. See the https://cloud.google.com/kms/docs/reference/rest/v1/CryptoKeyVersionAlgorithm for possible inputs. | `string` | `"GOOGLE_SYMMETRIC_ENCRYPTION"` | no |
 | <a name="input_key_protection_level"></a> [key\_protection\_level](#input\_key\_protection\_level) | The protection level to use when creating a version based on this template. Default value: "SOFTWARE" Possible values: ["SOFTWARE", "HSM"] | `string` | `"SOFTWARE"` | no |
 | <a name="input_key_rotation_period"></a> [key\_rotation\_period](#input\_key\_rotation\_period) | Generate a new key every time this period passes. | `string` | `"100000s"` | no |
+| <a name="input_kms-key-ring-enabled"></a> [kms-key-ring-enabled](#input\_kms-key-ring-enabled) | Set to false to prevent the module from creating any resources. | `bool` | `true` | no |
 | <a name="input_kms_crypto_key_enabled"></a> [kms\_crypto\_key\_enabled](#input\_kms\_crypto\_key\_enabled) | Set to false to prevent the module from creating any resources. | `bool` | `true` | no |
 | <a name="input_kms_crypto_key_iam_binding_enabled"></a> [kms\_crypto\_key\_iam\_binding\_enabled](#input\_kms\_crypto\_key\_iam\_binding\_enabled) | Set to false to prevent the module from creating any resources. | `bool` | `true` | no |
-| <a name="input_kms_key_ring_enabled"></a> [kms\_key\_ring\_enabled](#input\_kms\_key\_ring\_enabled) | Set to false to prevent the module from creating any resources. | `bool` | `true` | no |
 | <a name="input_label_order"></a> [label\_order](#input\_label\_order) | Label order, e.g. sequence of application name and environment `name`,`environment`,'attribute' [`webserver`,`qa`,`devops`,`public`,] . | `list(any)` | <pre>[<br>  "name",<br>  "environment"<br>]</pre> | no |
 | <a name="input_location"></a> [location](#input\_location) | Location for the keyring. | `string` | `"asia"` | no |
 | <a name="input_managedby"></a> [managedby](#input\_managedby) | ManagedBy, eg 'slovink'. | `string` | `"slovink"` | no |

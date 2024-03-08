@@ -1,5 +1,5 @@
 module "labels" {
-  source      = "git::https://github.com/slovink/terraform-google-labels.git?ref=v1.0.1"
+  source      = "git::https://github.com/slovink/terraform-google-labels.git?ref=v1.0.0"
   name        = var.name
   environment = var.environment
   label_order = var.label_order
@@ -13,8 +13,8 @@ data "google_client_config" "current" {
 #####==============================================================================
 #####A KeyRing is a top level logical grouping of CryptoKeys.
 #####==============================================================================
-resource "google_kms_key_ring" "key_ring" {
-  count    = var.kms_key_ring_enabled && var.enabled ? 1 : 0
+resource "google_kms_key_ring" "keyring" {
+  count    = var.kms-key-ring-enabled && var.enabled ? 1 : 0
   name     = format("%s-ring", module.labels.id)
   project  = data.google_client_config.current.project
   location = var.location
@@ -26,7 +26,7 @@ resource "google_kms_key_ring" "key_ring" {
 resource "google_kms_crypto_key" "key" {
   count           = var.kms_crypto_key_enabled && var.enabled ? 1 : 0
   name            = format("%s-key", module.labels.id)
-  key_ring        = join("", google_kms_key_ring.key_ring[*].id)
+  key_ring        = join("", google_kms_key_ring.keyring[*].id)
   rotation_period = var.key_rotation_period
   purpose         = var.purpose
 
@@ -46,7 +46,7 @@ resource "google_kms_crypto_key" "key" {
 resource "google_kms_crypto_key" "key_ephemeral" {
   count           = var.kms_crypto_key_enabled && var.enabled ? 1 : 0
   name            = format("%s-cryptokey", module.labels.id)
-  key_ring        = join("", google_kms_key_ring.key_ring[*].id)
+  key_ring        = join("", google_kms_key_ring.keyring[*].id)
   rotation_period = var.key_rotation_period
   purpose         = var.purpose
 

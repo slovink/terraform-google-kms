@@ -28,7 +28,7 @@ variable "repository" {
   description = "Terraform current module repo"
 }
 
-variable "kms_key_ring_enabled" {
+variable "kms-key-ring-enabled" {
   type        = bool
   default     = true
   description = "Set to false to prevent the module from creating any resources."
