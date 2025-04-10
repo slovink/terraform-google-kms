@@ -12,7 +12,7 @@
 <p align="center">
 
 <a href="https://www.terraform.io">
-  <img src="https://img.shields.io/badge/Terraform-v1.7.4-green" alt="Terraform">
+  <img src="https://img.shields.io/badge/Terraform-v1.9.5-green" alt="Terraform">
 </a>
 <a href="https://github.com/slovink/terraform-google-kms/blob/main/LICENSE">
   <img src="https://img.shields.io/badge/License-APACHE-blue.svg" alt="Licence">
@@ -71,14 +71,15 @@ This project is licensed under the **MIT** License - see the [LICENSE](https://g
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.7.4 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | >= 3.50, < 5.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9.5 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | >= 3.50.0, < 5.11.0 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | >= 3.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | >= 3.50, < 5.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | >= 3.50.0, < 5.11.0 |
 
 ## Modules
 
