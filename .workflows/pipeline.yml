@@ -62,10 +62,10 @@ stages:
       - job: kms
         displayName: KMS Job
         steps:
-          - task: TerraformInstaller@1
-            displayName: Ensure Terraform is Available
+          - task: TerraformToolInstaller@1
+            displayName: 'Install Terraform 1.9.5'
             inputs:
-              terraformVersion: $(terraformVersion)
+              terraformVersion: '1.9.5'
 
           - task: TerraformCLI@0
             displayName: Terraform Validate
