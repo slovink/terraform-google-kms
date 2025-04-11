@@ -102,3 +102,4 @@ stages:
               providerGoogleProject: $(projectName)
               providerGoogleRegion: $(region)
               commandOptions: '-var-file="$(System.DefaultWorkingDirectory)/terraform.tfvars"'
+
