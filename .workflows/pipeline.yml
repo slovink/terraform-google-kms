@@ -62,22 +62,22 @@ stages:
       - job: kms
         displayName: KMS Job
         steps:
-          - task: TerraformToolInstaller@1
-            displayName: 'Install Terraform 1.9.5'
+          - task: TerraformInstaller@1
+            displayName: Ensure Terraform is Available
             inputs:
-              terraformVersion: '1.9.5'
+              terraformVersion: $(terraformVersion)
 
           - task: TerraformCLI@0
             displayName: Terraform Validate
             inputs:
               command: validate
-              workingDirectory: $(System.DefaultWorkingDirectory)/examples/google_kms
+              workingDirectory: $(System.DefaultWorkingDirectory)/example
 
           - task: TerraformCLI@0
             displayName: Terraform Init
             inputs:
               command: init
-              workingDirectory: $(System.DefaultWorkingDirectory)/examples/google_kms
+              workingDirectory: $(System.DefaultWorkingDirectory)/examples
               backendType: gcs
               backendGcsCredentials: $(authenticationFileName)
               backendGcsBucket: $(gcp_bucket)
@@ -87,7 +87,7 @@ stages:
             displayName: Terraform Plan
             inputs:
               command: plan
-              workingDirectory: $(System.DefaultWorkingDirectory)/examples/google_kms
+              workingDirectory: $(System.DefaultWorkingDirectory)/example
               providerGoogleCredentials: $(authenticationFileName)
               providerGoogleProject: $(projectName)
               providerGoogleRegion: $(region)
@@ -97,7 +97,7 @@ stages:
             displayName: Terraform Apply
             inputs:
               command: apply
-              workingDirectory: $(System.DefaultWorkingDirectory)/examples/google_kms
+              workingDirectory: $(System.DefaultWorkingDirectory)/example
               providerGoogleCredentials: $(authenticationFileName)
               providerGoogleProject: $(projectName)
               providerGoogleRegion: $(region)
