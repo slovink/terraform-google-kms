@@ -65,7 +65,7 @@ stages:
           - task: TerraformInstaller@1
             displayName: Ensure Terraform is Available
             inputs:
-              terraformVersion: $(terraformVersion)
+              terraformVersion: '1.9.5'
 
 
           - task: TerraformCLI@0
