@@ -75,22 +75,23 @@ stages:
             inputs:
               terraformVersion: '1.9.5'
 
-
-          - task: TerraformCLI@0
-            displayName: Terraform Init
-            inputs:
-              command: init
-              workingDirectory: $(System.DefaultWorkingDirectory)/examples
-              backendType: gcs
-              backendGcsCredentials: $(authenticationFileName)
-              backendGcsBucket: $(gcp_bucket)
-              backendGcsPrefix: $(projectId)/$(platformName)/kms.infrax.tfstate
-
           - task: TerraformCLI@0
             displayName: Terraform Validate
             inputs:
               command: validate
               workingDirectory: $(System.DefaultWorkingDirectory)/example
+
+          - task: TerraformCLI@0
+            displayName: Terraform Init
+            inputs:
+              command: init
+              workingDirectory: $(System.DefaultWorkingDirectory)/example
+              backendType: gcs
+              backendGcsCredentials: $(authenticationFileName)
+              backendGcsBucket: $(gcp_bucket)
+              backendGcsPrefix: $(projectId)/$(platformName)/kms.infrax.tfstate
+
+
 
           - task: TerraformCLI@0
             displayName: Terraform Plan
