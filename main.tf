@@ -10,6 +10,12 @@ module "labels" {
 data "google_client_config" "current" {
 }
 
+resource "google_project_service" "kms" {
+  project            = data.google_client_config.current.project
+  service            = "cloudkms.googleapis.com"
+  disable_on_destroy = false
+}
+
 #####==============================================================================
 #####A KeyRing is a top level logical grouping of CryptoKeys.
 #####==============================================================================
