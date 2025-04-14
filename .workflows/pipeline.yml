@@ -70,13 +70,19 @@ stages:
     dependsOn: Prepare
     displayName: Google KMS Provisioning
     jobs:
-      - job: kms
-        displayName: KMS Job
+      terraform:
+        runs-on: ubuntu-latest
         steps:
-          - task: TerraformInstaller@1
-            displayName: Ensure Terraform is Available
-            inputs:
-              terraformVersion: '1.9.5'
+          - uses: actions/checkout@v3
+
+          - name: Set up Terraform
+            uses: hashicorp/setup-terraform@v2
+            with:
+              terraform_version: 1.9.5
+
+          - name: Terraform Init
+            run: terraform init
+
 
 
           - task: TerraformCLI@0
