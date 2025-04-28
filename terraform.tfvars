@@ -1,4 +1,4 @@
 name    = "service account"
-project = "Slovink Hyperscaler"
+project = "slovink-hyperscaler"
 region  = "asia-northeast1"
-zone    = "us-central1-a"
+zone    = "asia-northeast1-a"
