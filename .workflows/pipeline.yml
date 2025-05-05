@@ -1,0 +1,114 @@
+parameters:
+  - name: agentPool
+    type: string
+    default: Azure Pipelines
+    values:
+      - "Azure Pipelines"
+      - "Slovink-Selfhosted-Agent"
+
+trigger:
+  - main
+
+variables:
+  - name: gcp_bucket
+    value: slovink-hyperscaler
+  - name: terraformVersion
+    value: 1.9.5
+  - name: authenticationFileName
+    value: slovink-hyperscaler.json
+  - name: projectName
+    value: "Slovink hyperscaler"
+  - name: projectId
+    value: "slovink-hyperscaler"
+  - name: platformName
+    value: "google"
+  - name: environment
+    value: "development"
+  - name: region
+    value: "us-east1"
+  - name: zone
+    value: "us-east1-b"
+  - name: agentPoolName
+    value:  ${{ parameters.agentPool }}
+
+pool:
+  name: $(agentPoolName)
+
+stages:
+  - stage: Prepare
+    displayName: Initialization
+    jobs:
+      - job: prepare
+        steps:
+          - task: TerraformInstaller@1
+            displayName: Install Terraform
+            inputs:
+              terraformVersion: $(terraformVersion)
+
+          - task: DownloadSecureFile@1
+            name: development
+            displayName: 'Get GCP Secrets'
+            inputs:
+              secureFile: $(authenticationFileName)
+
+          - script: |
+              echo "Copying GCP credentials"
+              cp $(development.secureFilePath) .
+
+          - script: |
+              curl -s -L -o terraform.zip https://releases.hashicorp.com/terraform/1.9.5/terraform_1.9.5_linux_amd64.zip
+              unzip terraform.zip
+              sudo mv terraform /usr/local/bin/
+              terraform version
+            displayName: 'Manually install Terraform 1.9.5'
+
+
+  - stage: kms_provisioning
+    dependsOn: Prepare
+    displayName: Google KMS Provisioning
+    jobs:
+      - job: kms
+        displayName: KMS Job
+        steps:
+          - task: TerraformInstaller@1
+            displayName: Ensure Terraform is Available
+            inputs:
+              terraformVersion: '1.9.5'
+
+
+          - task: TerraformCLI@0
+            displayName: Terraform Init
+            inputs:
+              command: init
+              workingDirectory: $(System.DefaultWorkingDirectory)/example
+              backendType: gcs
+              backendGcsCredentials: $(authenticationFileName)
+              backendGcsBucket: $(gcp_bucket)
+              backendGcsPrefix: $(projectId)/$(platformName)/kms.infrax.tfstate
+
+          - task: TerraformCLI@0
+            displayName: Terraform Validate
+            inputs:
+              command: validate
+              workingDirectory: $(System.DefaultWorkingDirectory)/example
+
+          - task: TerraformCLI@0
+            displayName: Terraform Plan
+            inputs:
+              command: plan
+              workingDirectory: $(System.DefaultWorkingDirectory)/example
+              providerGoogleCredentials: $(authenticationFileName)
+              providerGoogleProject: $(projectName)
+              providerGoogleRegion: $(region)
+              commandOptions: '-var-file="$(System.DefaultWorkingDirectory)/terraform.tfvars"'
+
+          - task: TerraformCLI@0
+            displayName: Terraform Apply
+            inputs:
+              command: apply
+              workingDirectory: $(System.DefaultWorkingDirectory)/example
+              providerGoogleCredentials: $(authenticationFileName)
+              providerGoogleProject: $(projectName)
+              providerGoogleRegion: $(region)
+              commandOptions: '-var-file="$(System.DefaultWorkingDirectory)/terraform.tfvars"'
+

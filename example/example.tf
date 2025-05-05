@@ -1,5 +1,5 @@
 provider "google" {
-  project = "testing-gcp-ops"
+  project = "slovink-hyperscaler"
   region  = "asia-northeast1"
   zone    = "asia-northeast1-a"
 }
@@ -8,10 +8,10 @@ provider "google" {
 ##### kms_key module call .
 #####==============================================================================
 module "kms_key" {
-  source           = ".././"
-  name             = "ops"
-  environment      = "test"
-  location         = "asia-northeast1"
-  service_accounts = ["serviceAccount:444692745132-compute@developer.gserviceaccount.com"]
-  role             = "roles/editor"
+  source      = "./../"
+  name        = "apcdssdfdp"
+  environment = "test"
+  location    = "global"
+  keys        = ["test"]
+  role        = ["roles/cloudkms.cryptoKeyEncrypterDecrypter", "roles/cloudkms.cryptoKeyViewer"]
 }
